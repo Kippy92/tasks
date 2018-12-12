@@ -1,0 +1,46 @@
+<div class='container'>
+  <h1>
+    Restful Tasks API
+  </h1>
+  <h2>New Task</h2>
+  <form (submit)="addTask()">
+      <p> {{ newTask | json }} </p>
+      <p>Title</p>
+      <p><input type="text" name="newTask.title" [(ngModel)]="newTask.title" /> </p>
+      <p>Description</p>
+      <p><input type="text" name="newTask.description" [(ngModel)]="newTask.description" /></p>
+      <input type="submit" value="Create Task" />
+  </form>
+  <h2>Task List</h2>
+  <button (click) = "getTasks()">Get all tasks!</button>
+  <ul>
+    <li *ngFor="let task of tasks">
+      {{ task.title }}
+      <ul><li>
+        <button (click) = "getTask(task._id)">show</button>
+      </li>
+      <li>
+          <button (click) = "getEditTask(task._id)">edit</button>
+      </li>
+      <li>
+          <button (click) = "deleteTask(task._id)">delete</button>
+      </li>
+    </ul>
+    </li>
+  </ul>
+  <h2>Specific Task</h2>
+  <li *ngIf="this_task">
+    <app-task *ngIf="this_task" [getTask]="this_task"></app-task> 
+  </li>
+  <h2>Edit Task</h2>
+  <div *ngIf="edit_task">
+    <form (submit)="editTask(edit_task._id)">
+        <p>Title</p>
+        <p><input type="text" name="edit_task.title" placeholder= '{{edit_task.title}}' [(ngModel)]="edit_task.title"/></p>
+        <p>Description</p>
+        <p><input type="text" name="edit_task.description" placeholder= '{{edit_task.description}}' [(ngModel)]="edit_task.description"/></p>
+        <p><input type="submit" value="Edit Task" /></p>
+    </form>
+  </div>
+</div>
+<router-outlet></router-outlet>
